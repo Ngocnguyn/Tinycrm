@@ -4,6 +4,7 @@ import path from 'src/modules/Share/constants/path'
 import MainLayout from 'src/modules/Share/layouts/MainLayout'
 import { AppContext } from '../contexts/app.context'
 import AuthenticationLayout from '../layouts/AuthenticationLayout'
+import User from 'src/modules/UsersManagement/pages/User'
 
 const Login = lazy(() => import('src/modules/Authentication/pages/Login/Login'))
 const Home = lazy(() => import('src/modules/Home/pages'))
@@ -53,11 +54,21 @@ const useRouteElements = () => {
           )
         },
         {
-          path: path.role,
+          path: path.roles,
           element: (
             <MainLayout>
               <Suspense>
                 <Role />
+              </Suspense>
+            </MainLayout>
+          )
+        },
+        {
+          path: path.user,
+          element: (
+            <MainLayout>
+              <Suspense>
+                <User />
               </Suspense>
             </MainLayout>
           )

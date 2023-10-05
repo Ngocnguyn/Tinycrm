@@ -4,4 +4,5 @@ export interface RoleType {
 }
 export interface RoleConfig {
   id?: string
+  name?: string
 }

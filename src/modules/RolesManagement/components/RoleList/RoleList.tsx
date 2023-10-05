@@ -1,26 +1,46 @@
+import { Fragment } from 'react'
 import { RoleType } from '../../interfaces/role.type'
+import classNames from 'classnames'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 interface Props {
   roles: RoleType[]
+  roleID: string
+  handleDeleteRole: (id: string) => void
+  onEditRole: (id: string) => void
+  isLoading: boolean
 }
 
-const RoleList = ({ roles }: Props) => {
+const RoleList = ({ roles, roleID, isLoading, onEditRole, handleDeleteRole }: Props) => {
   return (
-    <div className='flex flex-col gap-4'>
-      {roles &&
-        roles.map((role: RoleType) => (
-          <div className='rounded-xl overflow-hidden bg-[#FCFCFD]'>
-            <div className='px-4 py-5'>
-              {/* <div className='flex justify-between items-center'>
-                <div className=''>
-                  <span className='font-bold text-sm overflow-hidden overflow-ellipsis whitespace-nowrap capitalize'>
+    <Fragment>
+      {isLoading ? (
+        <SkeletonTheme baseColor='#e7e7e7'>
+          <Skeleton count={2} className='h-[40px] mb-3' />
+        </SkeletonTheme>
+      ) : (
+        <div className='flex flex-col gap-4'>
+          {roles &&
+            roles.map((role: RoleType) => (
+              <div className='relative' key={role.id}>
+                <div>
+                  <div
+                    className={classNames(
+                      'w-full border-[1px] border-[#65cad7] px-4 py-2 rounded-md outline-none capitalize font-medium',
+                      {
+                        'bg-[#d4faff]': role.id !== roleID,
+                        'bg-[#65cad7]': role.id === roleID
+                      }
+                    )}
+                  >
                     {role.name}
-                  </span>
+                  </div>
                 </div>
-                <div className=''>
+                <div className='absolute top-2 right-2 flex items-center'>
                   <button
                     type='button'
                     className='p-1 text-[#02545fb7] rounded-md hover:bg-[#26c5da9f]'
+                    onClick={() => onEditRole(role.id)}
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -34,6 +54,7 @@ const RoleList = ({ roles }: Props) => {
                   <button
                     type='button'
                     className='p-1 text-[#fd2c2ce1] rounded-md hover:bg-[#26c5da9f]'
+                    onClick={() => handleDeleteRole(role.id)}
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -49,32 +70,11 @@ const RoleList = ({ roles }: Props) => {
                     </svg>
                   </button>
                 </div>
-              </div> */}
-              <button
-                className='inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 '
-                type='button'
-              >
-                {role.name}
-                <svg
-                  className='w-2.5 h-2.5 ml-2.5'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 10 6'
-                >
-                  <path
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='m1 1 4 4 4-4'
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        ))}
-    </div>
+              </div>
+            ))}
+        </div>
+      )}
+    </Fragment>
   )
 }
 

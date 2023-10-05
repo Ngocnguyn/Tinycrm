@@ -2,7 +2,7 @@ const path = {
   home: '/home',
   login: '/login',
   account: '/account',
-  role: '/role',
+  roles: '/roles',
   user: '/user',
   product: '/product'
 }

@@ -11,7 +11,7 @@ const MainLayout = ({ children }: Props) => {
       <Sidebar />
       <div className='flex flex-col flex-1'>
         <Header />
-        {children}
+        <div className='p-6'>{children}</div>
       </div>
     </div>
   )
